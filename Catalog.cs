@@ -2,16 +2,33 @@ namespace library;
 
 public class Catalog
 {
-    public List<Book> Books { get; set; } = new List<Book>();
+    private List<Book> Books { get; set; } = new List<Book>();
 
     public List<Book> Search(string searchCriteria, string queryString)
     {
         return Books.ToList();
     }
 
-    public BookItem AddBookItem(Librarian librarian, BookItem bookItem)
+    public Book AddBook(string isbn, string title, List<string> authors)
     {
-        return librarian.AddBookItem(bookItem);
+        Book book = new Book(isbn, title, authors);
+        Books.Add(book);
+
+        return book;
+    }
+
+    public Book GetBook(string isbn)
+    {
+        return Books.FirstOrDefault(b => b.Isbn == isbn);
+    }
+
+    public BookItem AddBookItem(string isbn)
+    {
+        Book book = Books.FirstOrDefault(b => b.Isbn == isbn);
+
+        var bookitem = book.AddBookItem();
+
+        return bookitem;
     }
 }
 

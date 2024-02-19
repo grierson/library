@@ -24,12 +24,9 @@ public class Member : User
         return true;
     }
 
-    public BookLending Checkout(BookItem bookItem)
+    public void Checkout(BookLending bookLending)
     {
-        var lending = bookItem.Checkout(this);
-        BookLendings.Add(lending);
-
-        return lending;
+        BookLendings.Add(bookLending);
     }
 }
 

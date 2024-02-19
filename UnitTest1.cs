@@ -2,14 +2,12 @@ namespace library;
 
 public class UnitTest1
 {
-
     [Fact]
     public void Test1()
     {
         string libraryId = "1";
         Library library = new Library(libraryId, "Name", "Address");
-        Librarian librarian = new Librarian();
-        library.Librarians.Add(librarian);
+        library.AddLibrarian();
 
         string watchmenISBN = "978-1779501127";
         string alanMooreId = "alan-moore";
@@ -17,17 +15,23 @@ public class UnitTest1
 
         Author alanMoore = new Author(alanMooreId, "Alan Moore", [watchmenISBN]);
         Author daveGibbons = new Author(daveGibbonsId, "Dave Gibbons", [watchmenISBN]);
-        Book book = new Book(watchmenISBN, "Watchmen", new List<string> { alanMooreId, daveGibbonsId });
 
-        library.Catalog.Books.Add(book);
-        BookItem bookItem = new BookItem("someid", libraryId);
-        library.Librarians[0].AddBookItem(bookItem);
+        library.Catalog.AddBook(
+                watchmenISBN,
+                "Watchmen",
+                new List<string> { alanMooreId, daveGibbonsId });
 
-        Member member = new Member();
-        member.Checkout(bookItem);
+        library.Catalog.AddBookItem(watchmenISBN);
+        library.AddMember();
+        Member member = library.GetMembers().FirstOrDefault();
+        library.Checkout(member, watchmenISBN);
+        var lendings = member.BookLendings;
 
-        var lendings = librarian.GetBookLendingsOfMember(member);
+        var lending = lendings.First();
+        Console.WriteLine(lending.Id);
+        Console.WriteLine(member.Id);
+        Console.WriteLine(lending.MemberId);
 
-        Assert.Equal(1, lendings.Count);
+        Assert.Single(lendings);
     }
 }

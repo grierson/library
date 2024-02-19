@@ -3,13 +3,15 @@ namespace library;
 
 public class BookLending
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
+    public string MemberId { get; private set; }
     public DateTime LendingDate { get; set; }
     public DateTime DueDate { get; set; }
 
-    public BookLending(string id, DateTime lendingDate, DateTime dueDate)
+    public BookLending(string memberId, DateTime lendingDate, DateTime dueDate)
     {
-        Id = id;
+        Id = Guid.NewGuid();
+        MemberId = memberId;
         LendingDate = lendingDate;
         DueDate = dueDate;
     }

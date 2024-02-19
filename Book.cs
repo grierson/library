@@ -1,18 +1,24 @@
 namespace library;
 
-public class Book
+public class Book(string isbn, string title, List<string> authors)
 {
-    public string Id { get; set; }
-    public string Title { get; set; }
+    public string Isbn { get; set; } = isbn;
+    public string Title { get; set; } = title;
 
-    public List<string> AuthorIds { get; set; }
-    public List<BookItem> BookItems { get; set; }
+    public List<string> AuthorIds { get; set; } = authors;
+    public List<BookItem> BookItems { get; set; } = new List<BookItem>();
 
-    public Book(string id, string title, List<string> authors)
+    public BookItem AddBookItem()
     {
-        Id = id;
-        Title = title;
-        AuthorIds = authors;
+        BookItem bookItem = new BookItem();
+        BookItems.Add(bookItem);
+        return bookItem;
+    }
+
+    public BookItem GetBookItem()
+    {
+        var bookitem = BookItems.FirstOrDefault();
+        return bookitem;
     }
 }
 
