@@ -4,11 +4,6 @@ public class Member : User
 {
     public List<BookLending> BookLendings { get; set; } = new List<BookLending>();
 
-    public bool IsBlocked()
-    {
-        return false;
-    }
-
     public bool Block()
     {
         return true;
@@ -19,14 +14,22 @@ public class Member : User
         return true;
     }
 
-    public BookLending ReturnBook(BookLending bookLending)
+    public bool IsBlocked()
     {
-        return bookLending;
+        return false;
+    }
+
+    public bool ReturnBook(BookLending bookLending)
+    {
+        return true;
     }
 
     public BookLending Checkout(BookItem bookItem)
     {
-        return bookItem.Checkout(this);
+        var lending = bookItem.Checkout(this);
+        BookLendings.Add(lending);
+
+        return lending;
     }
 }
 

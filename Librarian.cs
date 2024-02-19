@@ -12,10 +12,9 @@ public class Librarian : User
         return member.Unblock();
     }
 
-    public BookItem AddBookItem(Member member, BookItem bookItem)
+    public BookItem AddBookItem(BookItem bookItem)
     {
-        var lending = member.Checkout(bookItem);
-        member.BookLendings.Add(lending);
+
         return bookItem;
     }
 

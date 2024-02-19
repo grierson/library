@@ -1,23 +1,15 @@
 namespace library;
 
-public class BookItem
+public class BookItem(string id, string libId)
 {
-    public string Id { get; set; }
-    public string LibId { get; set; }
+    public string Id { get; set; } = id;
+    public string LibId { get; set; } = libId;
+    public BookLending BookLending { get; set; } =
+        new BookLending(libId, DateTime.Now, DateTime.Now.AddDays(14));
 
-    public List<BookLending> Lendings { get; set; } = new List<BookLending>();
-
-    public BookItem(string id, string libId)
+    public BookLending Checkout(Member member)
     {
-        Id = id;
-        LibId = libId;
-    }
-
-    public BookLending Checkout(User member)
-    {
-        var lending = new BookLending(LibId, DateTime.Now, DateTime.Now.AddDays(14));
-        Lendings.Add(lending);
-        return lending;
+        return BookLending;
     }
 }
 

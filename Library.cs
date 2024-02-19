@@ -1,18 +1,13 @@
 namespace library;
 
-public class Library
+public class Library(string id, string name, string address)
 {
-    public string Name { get; set; }
-    public string Address { get; set; }
+    public string Id { get; set; } = id;
+    public string Name { get; set; } = name;
+    public string Address { get; set; } = address;
 
     public Catalog Catalog { get; set; } = new Catalog();
     public List<Member> Members { get; set; } = new List<Member>();
     public List<Librarian> Librarians { get; set; } = new List<Librarian>();
-
-    public Library(string name, string address)
-    {
-        Name = name;
-        Address = address;
-    }
 }
 

@@ -1,10 +1,8 @@
+
 namespace library;
 
 public class BookLending
 {
-    public List<Member> Member { get; set; }
-    public BookItem BookItem { get; set; }
-
     public string Id { get; set; }
     public DateTime LendingDate { get; set; }
     public DateTime DueDate { get; set; }
@@ -14,8 +12,6 @@ public class BookLending
         Id = id;
         LendingDate = lendingDate;
         DueDate = dueDate;
-        Member = new List<Member>();
-        BookItem = new BookItem("BookId", "LibId");
     }
 
     public bool IsLate()
