@@ -7,7 +7,6 @@ public class UnitTest1
     {
         string libraryId = "1";
         Library library = new Library(libraryId, "Name", "Address");
-        library.AddLibrarian();
 
         string watchmenISBN = "978-1779501127";
         string alanMooreId = "alan-moore";
@@ -22,16 +21,15 @@ public class UnitTest1
                 new List<string> { alanMooreId, daveGibbonsId });
 
         library.Catalog.AddBookItem(watchmenISBN);
-        library.AddMember();
-        Member member = library.GetMembers().FirstOrDefault();
+
+        var memberId = library.AddMember();
+        Member member = library.GetMember(memberId);
+
         library.Checkout(member, watchmenISBN);
-        var lendings = member.BookLendings;
 
-        var lending = lendings.First();
-        Console.WriteLine(lending.Id);
-        Console.WriteLine(member.Id);
-        Console.WriteLine(lending.MemberId);
+        Book book = library.Catalog.GetBook(watchmenISBN);
 
-        Assert.Single(lendings);
+        Assert.Single(member.MemberBookLendings);
+        Assert.Single(book.BookItems[0].BookLending);
     }
 }

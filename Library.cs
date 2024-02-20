@@ -7,13 +7,15 @@ public class Library(string id, string name, string address)
     public string Address { get; set; } = address;
 
     public Catalog Catalog { get; set; } = new Catalog();
-    private List<Member> Members { get; set; } = new List<Member>();
     private List<Librarian> Librarians { get; set; } = new List<Librarian>();
+    private List<Member> Members { get; set; } = new List<Member>();
 
-    public void AddMember()
+    public Guid AddMember()
     {
-        var member = new Member();
+        var id = Guid.NewGuid();
+        var member = new Member(id);
         Members.Add(member);
+        return id;
     }
 
     public List<Member> GetMembers()
@@ -21,24 +23,30 @@ public class Library(string id, string name, string address)
         return Members.ToList();
     }
 
-    public Member GetMember(string memberId)
+    public Member GetMember(Guid id)
     {
-        return Members.FirstOrDefault(x => x.Id == memberId);
+        return Members.FirstOrDefault(x => x.Id == id);
     }
 
-    public void AddLibrarian()
+    public Librarian GetLibrarian(Guid id)
+    {
+        return Librarians.FirstOrDefault(x => x.Id == id);
+    }
+
+    public Guid AddLibrarian()
     {
         var librarian = new Librarian();
         Librarians.Add(librarian);
+        return librarian.Id;
     }
 
     public void Checkout(Member member, string isbn)
     {
         Book book = Catalog.GetBook(isbn);
-        BookItem bookItem = book.GetBookItem();
+        BookItem bookItem = book.GetAvailableBookItem();
         var lending = new BookLending(member.Id, DateTime.Now, DateTime.Now.AddDays(14));
         member.Checkout(lending);
-        bookItem.Checkout(member);
+        bookItem.Checkout(lending, member);
     }
 }
 

@@ -15,9 +15,9 @@ public class Book(string isbn, string title, List<string> authors)
         return bookItem;
     }
 
-    public BookItem GetBookItem()
+    public BookItem GetAvailableBookItem()
     {
-        var bookitem = BookItems.FirstOrDefault();
+        var bookitem = BookItems.Where(x => !x.IsLent).FirstOrDefault();
         return bookitem;
     }
 }

@@ -1,15 +1,22 @@
 namespace library;
 
-public class BookItem()
+public class BookItem
 {
     public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsLent { get; set; } = false;
     public List<BookLending> BookLending { get; set; } = new List<BookLending>();
 
-    public BookLending Checkout(Member member)
+    public BookLending Checkout(BookLending lending, Member member)
     {
-        var lending = new BookLending(member.Id, DateTime.Now, DateTime.Now.AddDays(14));
         BookLending.Add(lending);
+        IsLent = true;
         return lending;
+    }
+
+    public void ReturnBook(BookLending bookLending)
+    {
+        BookLending.Remove(bookLending);
+        IsLent = false;
     }
 }
 
