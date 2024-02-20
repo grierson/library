@@ -40,9 +40,10 @@ public class Library(string id, string name, string address)
         return librarian.Id;
     }
 
-    public void Checkout(Member member, string isbn)
+    public void Checkout(Guid memberId, string isbn)
     {
         Book book = Catalog.GetBook(isbn);
+        Member member = GetMember(memberId);
         BookItem bookItem = book.GetAvailableBookItem();
         var lending = new BookLending(member.Id, DateTime.Now, DateTime.Now.AddDays(14));
         member.Checkout(lending);

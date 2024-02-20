@@ -20,14 +20,14 @@ public class UnitTest1
                 "Watchmen",
                 new List<string> { alanMooreId, daveGibbonsId });
 
+        Librarian librarian = new Librarian();
+        Book book = library.Catalog.GetBook(watchmenISBN);
         library.Catalog.AddBookItem(watchmenISBN);
 
-        var memberId = library.AddMember();
+        Guid memberId = library.AddMember();
         Member member = library.GetMember(memberId);
 
-        library.Checkout(member, watchmenISBN);
-
-        Book book = library.Catalog.GetBook(watchmenISBN);
+        library.Checkout(memberId, watchmenISBN);
 
         Assert.Single(member.MemberBookLendings);
         Assert.Single(book.BookItems[0].BookLending);
